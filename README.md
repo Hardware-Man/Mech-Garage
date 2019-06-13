@@ -1,1 +1,3 @@
 # Mech-Garage
+Welcome to my repo!
+There'll be some more stuff here, eventually...
