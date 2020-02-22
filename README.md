@@ -1,3 +1,3 @@
 # Mech-Garage
 Welcome to my repo!
-There'll be some more stuff here, eventually...
+I'll be storing some of my coursework here.
