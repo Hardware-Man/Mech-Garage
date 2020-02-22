@@ -1,0 +1,81 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+int** mata;
+int** matb;
+
+void initialize(int, int, int**);
+void freematrix(int**);
+int** multiplymat(int**, int**);
+
+void initialize(int r, int c, int** mat){
+  mat = malloc(r * sizeof(int*));
+  for(int i = 0; i < r; i++){
+    mat[i] = malloc(c * sizeof(int));
+  }
+}
+
+void freematrix(int** mat){
+  for(int i = 0; i < (sizeof(mat)/sizeof(int*)); i++){
+    free(mat[i]);
+  }
+  free(mat);
+}
+
+int** multiplymat(int** matd, int** mate){
+  int** result;
+  int rowd = (sizeof(matd)/sizeof(int*));
+  int cold = (sizeof(matd[0])/sizeof(int));
+  int cole = (sizeof(mate[0])/sizeof(int));
+  initialize(rowd, cole, result);
+  for(int i = 0; i < rowd; i++){
+    for(int j = 0; j < cole; j++){
+      result[i][j] = 0;
+      for(int l = 0; l < cold; l++){
+	result[i][j] += matd[i][l] + mate[l][j];
+      }
+    }
+  }
+  return result;
+}
+
+int main(int argc, char** agrv){
+  FILE* fp = fopen(argv[1], "r");
+  int m;
+  int n;
+  int o;
+  int p;
+  fscanf(fp, "%d\t%d", &m, &n);
+  initialize(m, n, mata);
+  for(int i = 0; i < m; i++){
+    for(int j = 0; j < n-1; j++){
+      fscanf(fp, "%d\t", &mata[i][j]);
+    }
+    fscanf(fp, "%d\n", &mata[i][n-1]);
+  }
+  fscanf(fp, "%d\t%d", &o, &p);
+  if(o != p){
+    freematrix(mata);
+    printf("bad-matrices\n");
+    exit(0);
+  }
+  initialize(o, p, matb);
+  for(int i = 0; i < o; i++){
+    for(int j = 0; j < p-1; j++){
+      fscanf(fp, "%d\t", &matb[i][j]);
+    }
+    fscanf(fp, "%d\n", &matb[i][p-1]);
+  }
+  int** matc = multiplymat(mata, matb);
+  for(int i = 0; i < m; i++){
+    for(int j = 0; j < p; i++){
+      printf("%d\t", matc[i][j]);
+    }
+    printf("%d\n", matc[i][p-1]);
+  }
+  freematrix(mata);
+  freematrix(matb);
+  freematrix(matc);
+  fclose(fp);
+  return(0);
+}
