@@ -1,0 +1,19 @@
+# CS 415 Project 1
+
+## Compile Instructions
+
+Please compile the source code with gcc (preferrably with std=c11).
+Example:
+gcc -std=c11 alloc.c -o alloc
+
+## Program Execution
+
+Call the executable with the number of registers, allocaiton algorithm, and input file name as the arguments in said order.
+Example:
+./alloc 5 b block1.i
+
+## Program Output
+
+The output file's name will be dependent on the number of registers given, the allocation method chosen, and the input file's name.
+Output file name for 5, b, "block1.i": 
+"5_b_block1.i"
